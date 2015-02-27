@@ -3,9 +3,9 @@ Med Hub Installer
 
 [Vagrant][] and [ansible][] scripts to setup and run a VM hosting all components of Med-Hub:
 
-- [medication-service][], port 8000 -> 18000
-- [medication-app][], port 80 -> 10080
-- MongoDB Backend, on port 27017
+- [medication-service][], port `8000` -> `18000`
+- [medication-app][], port `80` -> `10080`
+- MongoDB Backend, on port `27017`
 
 This will install _lighttpd_, configured to proxy requests on both ports through _supervisor_ to the _gunicorn_ ports the apps are running on.
 
@@ -36,7 +36,22 @@ Installing
 
         vagrant up
 
-9. On your host machine you can now connect to the VM's hosted app at [http://192.168.88.22]() (or the URL you have configured).
+9. On your host machine you can now connect to the VM's hosted app at [http://192.168.88.22]() (or the URL you have configured in `Vagrantfile`).
+
+Digital Ocean
+-------------
+
+To provision a droplet, run the ansible playbook directly after creating a `hosts` file containing:
+
+    [medhub]
+    1.2.3.4 ansible_connection=ssh ansible_ssh_user=root
+
+Now run with:
+
+    $ ansible-playbook -i hosts playbook.yml
+
+This assumes that you have setup your droplet to have your SSH key.
+
 
 [vagrant]: http://www.vagrantup.com/downloads
 [ansible]: http://docs.ansible.com
