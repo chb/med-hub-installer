@@ -38,6 +38,17 @@ Installing
 
 9. On your host machine you can now connect to the VM's hosted app at [http://192.168.88.22]() (or the URL you have configured in `Vagrantfile`).
 
+
+RxNorm
+------
+
+Before any medication task works, the VM needs to have a local RxNorm database for _medication-service_.
+The service app has a script that sets up an SQLite3 database and populates a MongoDB automatically:
+
+1. Download the latest RxNorm distribution and place the ZIP in the root directory of _medication-service_
+2. Run `setup.sh`
+
+
 Digital Ocean
 -------------
 
