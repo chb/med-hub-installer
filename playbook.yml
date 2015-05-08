@@ -5,5 +5,10 @@
     - settings.yml
   roles:
     - { role: Stouts.mongodb, tags: ['mongodb']}
-    #- zufallsheld.lighttpd-gunicorn-flask
     - { role: lighttpd-gunicorn-flask, tags: ['app_install', 'flask_install']}
+  tasks:
+    - name: Install OS packages needed for service setup
+      apt: pkg="{{item}}" state=present
+      with_items:
+        - unzip
+        - sqlite3

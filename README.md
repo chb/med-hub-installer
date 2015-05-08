@@ -40,18 +40,36 @@ Installing
 
         vagrant up
 
-10. On your host machine you can now connect to the VM's hosted app at [http://192.168.88.22]() (or the URL you have configured in `Vagrantfile`).
+10. On your host machine you can now connect to the VM's hosted app at [192.168.88.22](http://192.168.88.22) (or the URL you have configured in `Vagrantfile`).
+11. The first time **medication-service** is installed, you will need to initialize its RxNorm database, see below.
 
 
 RxNorm
 ------
 
 Before any medication task works, the VM needs to have a local RxNorm database for _medication-service_.
-The service app has a script that sets up an SQLite3 database and populates a MongoDB automatically:
+The service repo contains a script that sets up a SQLite3 database and populates a MongoDB automatically.
 
-1. Download the latest RxNorm distribution and place the ZIP in the root directory of _medication-service_
-2. Run `setup.sh`
+1. Download the latest full RxNorm release [from NLM](http://www.nlm.nih.gov/research/umls/rxnorm/docs/rxnormfiles.html) and place the ZIP in the installer's directory.
+    This makes it available under `/vagrant` from inside the VM.
+2. SSH into the VM:
+    
+        vagrant ssh
+    
+3. Copy (or move) the RxNorm ZIP into the service's root directory:
+    
+        sudo cp /vagrant/RxNorm_full_xxxxxxxx.zip /var/www/html/medication-service/
+    
+4. As the web user, activate the virtual environment and run the setup script.
+    This will start the import into _SQLite_ and indexing, then produce mapping and fill the VM's _Mongo_ database, which will take a few minutes.
 
+        cd /var/www/html/medication-service
+        sudo -u www-data bash
+        . env/bin/activate
+        ./setup.sh
+    
+    > For whatever reason, the script would sometimes complain that I did not have `sqlite3` installed.
+    > If this happens while it is in fact installed you will need to comment out the early exit in `medication-service/UMLS/databases/rxnorm.sh` line 18.
 
 Digital Ocean
 -------------
