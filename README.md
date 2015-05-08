@@ -16,6 +16,7 @@ Installing
 2. Install vagrant plugins:
 
         vagrant plugin install vagrant-vbguest
+        vagrant plugin install vagrant-proxyconf    # only if behind proxy
 
 3. Install ansible galaxy items:
 
@@ -30,13 +31,16 @@ Installing
     - Create a new SSH key - without setting a passphrase - into a local file named `deploy_key.app` and `deploy_key.service` using `ssh-keygen`
     - Add these keys to the repo's "Deployment Keys" on GitHub
 
-6. Adjust `settings.yml` to your liking
-7. Adjust `config.service.py` and `config.app.py` to your liking
-8. Get the VM configured and running:
+6. _Optionally_, if you're behind a proxy, add your proxy settings and make sure you installed the _proxyconf_ plugin in step 2:
+    - In `Vagrantfile`, adjust `config.proxy.*`
+
+7. Adjust `settings.yml` to your liking
+8. Adjust `config.service.py` and `config.app.py` to your liking
+9. Get the VM configured and running:
 
         vagrant up
 
-9. On your host machine you can now connect to the VM's hosted app at [http://192.168.88.22]() (or the URL you have configured in `Vagrantfile`).
+10. On your host machine you can now connect to the VM's hosted app at [http://192.168.88.22]() (or the URL you have configured in `Vagrantfile`).
 
 
 RxNorm
